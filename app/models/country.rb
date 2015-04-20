@@ -1,5 +1,7 @@
+# require_relative '../uploaders/flag_uploader'
+
 class Country < ActiveRecord::Base
 	has_many :cities, -> { select 'cities.*' }
-
-	#, :through => :follows
+	mount_uploader :flag, FlagUploader 
+	validates :name, presence: true
 end

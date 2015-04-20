@@ -7,9 +7,24 @@ class CountriesController < ApplicationController
     @countries = Country.paginate(:page => params[:page], :per_page => 10).order('name DESC')
   end
 
+  def list_cities
+    id = request.query_parameters[:id].to_i
+    @data = Country.find(id).cities
+    render json: @data.map(&:name)
+  end
+
+  def upload
+    # uploaded_io = params[:countries][:picture]
+    # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+    #   file.write(uploaded_io.read)
+    # end
+  end
+
   # GET /countries/1
   # GET /countries/1.json
   def show
+    # @country = Country.find(params[:id])
+    # byebug
   end
 
   # GET /countries/new

@@ -1,3 +1,34 @@
+<script type="text/javascript">
+	
+	$(document).ready(function(){
+	$('select#country').change(function(){
+		var country_id = $('select#country').val();
+		if(country_id != 0)
+		{
+			$.ajax({
+				type:'get',
+				url:'/listcities/',
+				data:{id:country_id},
+				cache:false,
+				success: function(returndata){
+
+					var options = '<option value="*">Please select Class</option>';
+                                    
+					returndata.forEach(function(data){
+						// console.log(data);
+						// $('#city').prepend(
+						// 	new Option(data,data)
+						// );
+                        options += '<option value="' + data + '">' + data + '</option>';
+					});
+					$('select#city').html(options);
+				}
+			});
+		}
+	})
+})
+</script>
+
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -5,10 +36,23 @@
   <%= @country.name %>
 </p>
 
+
 <p>
   <strong>Flag:</strong>
   <%= @country.flag %>
 </p>
+<select class="form-control " id="country">
+  <% Country.all.each do |country| %>
+  <option value="<%= country.id %>"><%= country.name %></option>
+  <% end %>
+</select>
 
+<strong>List Cities:</strong>
+
+<select class="form-control" id="city">
+  <% @country.cities.each do |city| %>
+  <option value="<%= city.id  %>"><%= city.name %></option>
+  <% end %>
+</select>
 <%= link_to 'Edit', edit_country_path(@country) %> |
 <%= link_to 'Back', countries_path %>

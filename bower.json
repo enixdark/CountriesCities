@@ -1,0 +1,21 @@
+{
+  "name": "Geography",
+  "version": "0.0.0",
+  "homepage": "https://github.com/enixdark/CountriesCities",
+  "authors": [
+    "enixdark <cqshinn92@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-file-upload": "~9.9.3",
+    "blueimp-file-upload": "https://github.com/blueimp/jQuery-File-Upload.git#~9.9.3",
+    "magnific-popup": "https://github.com/dimsemenov/Magnific-Popup.git#~1.0.0"
+  }
+}
