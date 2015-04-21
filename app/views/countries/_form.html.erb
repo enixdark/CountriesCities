@@ -1,6 +1,5 @@
 
-
-<%= form_for @country, html: { multipart: true } do |f| %>
+<%= form_for @country, class: "form-group",html: { multipart: true } do |f| %>
   <% if @country.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@country.errors.count, "error") %> prohibited this country from being saved:</h2>
@@ -15,7 +14,7 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "form-control" %>
   </div>
   <div class="row">
         <div class="col-lg-6 col-sm-6 col-12">
@@ -23,7 +22,7 @@
             <div class="input-group">
                 <span class="input-group-btn">
                     <span class="btn btn-primary btn-file">
-                        Browse <%= f.label :flag %><%= f.file_field :flag, class: "btn" %>
+                        Browse <%= f.label :flag %> <%= f.file_field :flag%>
                     </span>
                 </span>
                 <input type="text" class="form-control">
@@ -35,3 +34,4 @@
     <%= f.submit 'Save',  class: "btn btn-primary"%>
   </div>
 <% end %>
+

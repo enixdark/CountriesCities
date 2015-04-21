@@ -17,6 +17,9 @@
     "jquery-file-upload": "~9.9.3",
     "blueimp-file-upload": "https://github.com/blueimp/jQuery-File-Upload.git#~9.9.3",
     "magnific-popup": "https://github.com/dimsemenov/Magnific-Popup.git#~1.0.0",
-    "sprintf": "~1.0.2"
+    "sprintf": "~1.0.2",
+    "bootstrap-select": "~1.6.5",
+    "bootstrap-notify": "~0.2.0",
+    "remarkable-bootstrap-notify": "~3.0.2"
   }
 }

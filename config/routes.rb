@@ -1,9 +1,15 @@
 Rails.application.routes.draw do
-  resources :cities
+  resources :cities, only: [:show, :edit, :new, :create, :destroy]
+  resources :cities, :only => [:show,:index], :constraints => {:format => /(json|xml)/}
+  # namespace :api, constraints: { format: 'json' } do
+  #   namespace :v1 do
+  #     resources :cities
+  #   end
+  # end
   resources :countries#, only: [:index, :new, :create, :destroy]
   # resources :flag, only: [:index, :new, :create, :destroy]
-  get 'listcities/' => 'countries#list_cities'
-  get 'cities/:id', to: redirect('/cities')
+  get 'listcities' => 'countries#list_cities'
+  get 'cities', to: redirect('/countries')
   # get 'cities' => ''
   # get 'upload' => 'countries#upload'
 
