@@ -51,7 +51,7 @@
 					cache:false,
 					success: function(returndata){
 
-						var img = returndata.image === 'nil' ? '/uploads/default.jpg' : returndata.image;
+						var img = returndata.url === 'nil' ? '/uploads/default.jpg' : returndata.url;
 						var image = sprintf(
 							"<a href='%s'><image id='img' src='%s'></image></a>",img, img );
 
@@ -121,7 +121,8 @@
 
 						<p>
 							<strong>Flag:</strong>
-							<%= image_tag @country.flag, width: 100, height: 70 %>
+							<img src="<%= @country.url %>" width="100" height="70"/> 
+							<!--<%= image_tag @country.flag, width: 100, height: 70 %>-->
 						</p>
 					</div>
 

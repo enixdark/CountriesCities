@@ -1,3 +1,12 @@
+<script type="text/javascript">
+  $(document).ready(function($) {
+    $('input[type="file"]').on('change',function(){
+      $('#city_url').val($('input[type="file"]').val());
+    });
+  });
+</script>
+
+
 <div class="containter">
 
 <%= form_for @city, class: "form-group" do |f| %>
@@ -13,18 +22,52 @@
     </div>
   <% end %>
 
+
+
   <div class="field">
-    <%= f.label :country_id,class: "label" %><br>
-    <%= f.collection_select :country_id, Country.all, :id, :name , {prompt: "Select a category"}, {class: "selectpicker"}%>
+    <div class="row">
+      <div class="col-xs-1">
+        <%= f.label :country_id, class: "label" %>
+      </div>
+      <br>
+      <div class="col-xs-6">
+      <%= f.collection_select :country_id, Country.all, :id, :name , {prompt: "Select The Country"}, {class: "form-control"}%>
+      </div>
+    </div>
   </div>
+
   <div class="field">
-    <%= f.label :name,class: "label" %><br>
-    <%= f.text_field :name, class: "form-control" %>
+    <div class="row">
+      <div class="col-xs-1">
+        <%= f.label :name,class: "label" %><br>
+      </div>
+      <br>
+      <div class="col-xs-6">
+      <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
   </div>
+
   <div class="field">
-    <%= f.label :image, class: "label" %><br>
-    <%= f.text_field :image, class: "form-control" %>
+    <div class="row">
+      <div class="col-xs-1">
+        <%= f.label :image, class: "label"  %> 
+      </div>
+      <br>
+      <div class="col-xs-6">
+
+      <div class="input-group">
+        <span class="input-group-btn">
+          <span class="btn btn-primary btn-file">
+            Browse<%= f.file_field :image%>
+          </span>
+        </span>
+        <%= f.text_field :url, class: "form-control"%>
+      </div>
+      </div>
+    </div>
   </div>
+
   <div class="actions">
     <%= f.submit 'Save', class: "btn btn-info crud" %>
   </div>

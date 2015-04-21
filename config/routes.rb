@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :cities, only: [:show, :edit, :new, :create, :destroy]
+  resources :cities, only: [:show, :edit, :new, :create, :destroy, :update]
   resources :cities, :only => [:show,:index], :constraints => {:format => /(json|xml)/}
   # namespace :api, constraints: { format: 'json' } do
   #   namespace :v1 do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150420121552) do
+ActiveRecord::Schema.define(version: 20150421173729) do
 
   create_table "cities", force: :cascade do |t|
     t.integer  "country_id", limit: 4
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20150420121552) do
     t.string   "image",      limit: 255
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.string   "url",        limit: 255
   end
 
   add_index "cities", ["country_id"], name: "fk_rails_996e05be41", using: :btree
@@ -30,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150420121552) do
     t.datetime "updated_at",                  null: false
     t.integer  "countries_id_id", limit: 4
     t.integer  "cities_id",       limit: 4
+    t.string   "url",             limit: 255
   end
 
   add_index "countries", ["cities_id"], name: "index_countries_on_cities_id", using: :btree

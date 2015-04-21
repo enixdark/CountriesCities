@@ -19,7 +19,15 @@ class CitiesController < ApplicationController
 
   def create
     @city = City.new(city_params)
-    byebug
+    if !city_params[:image].nil? &&
+      city_params[:image].original_filename == city_text_params[:url]
+      @city = City.new(city_params)
+      @city.save
+      @city.url = @city.image.url
+    else
+      @city = City.new(city_text_params)
+    end
+
     respond_to do |format|
       if @city.save
         format.html { redirect_to @city, notice: 'City was successfully created.' }
@@ -32,8 +40,22 @@ class CitiesController < ApplicationController
   end
 
   def update
+
+    p = city_params
+    if !p[:image].nil?
+      if p[:image].original_filename == city_text_params[:url]
+        f = p[:image]
+        p[:url] = File.join('/',imageUploader.dir,f.headers.split()[2].split(/\W+/)[1..-1],
+          params[:id],f.original_filename)
+      else
+        p[:url] = city_text_params[:url]
+      end
+    else
+      p[:url] = city_text_params[:url]
+    end
+
     respond_to do |format|
-      if @city.update(city_params)
+      if @city.update(p)
         format.html { redirect_to @city, notice: 'City was successfully updated.' }
         format.json { render :show, status: :ok, location: @city }
       else
@@ -57,6 +79,10 @@ class CitiesController < ApplicationController
     end
 
     def city_params
-      params.require(:city).permit(:countries_id, :name, :image)
+      params.require(:city).permit(:city_id, :name, :image)
+    end
+
+    def city_text_params
+      params.require(:city).permit(:city_id, :name, :url)
     end
 end

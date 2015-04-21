@@ -7,17 +7,20 @@ class CountriesController < ApplicationController
   end
 
   def list_cities
+    """
+    Get list cities of etraxt country by id
+    """
     id = request.query_parameters[:id].to_i
     @data = Country.find(id).cities
     render json: @data.map { |d| {id: d.id,name: d.name}}
   end
 
-  def upload
-    uploaded_io = params[:countries][:flag]
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-  end
+  # def upload
+  #   uploaded_io = params[:countries][:flag]
+  #   File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+  #     file.write(uploaded_io.read)
+  #   end
+  # end
 
   
   def show
@@ -34,14 +37,17 @@ class CountriesController < ApplicationController
 
   
   def create
-    if country_params[:flag].original_filename == country_text_params[:flag_text]
+    if !country_params[:flag].nil? &&
+      country_params[:flag].original_filename == country_text_params[:url]
       @country = Country.new(country_params)
+      @country.save
+      # path = @country.flag.store_path.split('/')
+      # path.insert(3,@country.id)
+      @country.url = @country.flag.url
     else
-      @country = Country.new
-      @country.name = country_text_params[:name]
-      @country.flag = country_text_params[:flag_text]
+      @country = Country.new(country_text_params)
     end
-    byebug
+    # byebug
     respond_to do |format|
       if @country.save
         format.html { redirect_to @country, notice: 'Country was successfully created.' }
@@ -54,8 +60,26 @@ class CountriesController < ApplicationController
   end
 
   def update
+
+    """
+    extract request data from client and assign
+    """
+
+    p = country_params
+    if !p[:flag].nil?
+      if p[:flag].original_filename == country_text_params[:url]
+        f = p[:flag]
+        p[:url] = File.join('/',FlagUploader.dir,f.headers.split()[2].split(/\W+/)[1..-1],
+          params[:id],f.original_filename)
+      else
+        p[:url] = country_text_params[:url]
+      end
+    else
+      p[:url] = country_text_params[:url]
+    end
+    # country_params[:url] = country_params[:flag].url
     respond_to do |format|
-      if @country.update(country_params)
+      if @country.update(p)
         format.html { redirect_to @country, notice: 'Country was successfully updated.' }
         format.json { render :show, status: :ok, location: @country }
       else
@@ -83,6 +107,6 @@ class CountriesController < ApplicationController
     end
 
     def country_text_params
-      params.require(:country).permit(:name, :flag_text)
+      params.require(:country).permit(:name, :url)
     end
 end
