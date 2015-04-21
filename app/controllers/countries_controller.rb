@@ -10,7 +10,7 @@ class CountriesController < ApplicationController
   def list_cities
     id = request.query_parameters[:id].to_i
     @data = Country.find(id).cities
-    render json: @data.map(&:name)
+    render json: @data.map { |d| {id: d.id,name: d.name}}
   end
 
   def upload

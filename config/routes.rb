@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # resources :cities
+  resources :cities
   resources :countries#, only: [:index, :new, :create, :destroy]
   # resources :flag, only: [:index, :new, :create, :destroy]
   get 'listcities/' => 'countries#list_cities'

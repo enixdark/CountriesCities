@@ -1,31 +1,70 @@
 <script type="text/javascript">
 	
 	$(document).ready(function(){
-	$('select#country').change(function(){
-		var country_id = $('select#country').val();
-		if(country_id != 0)
-		{
-			$.ajax({
-				type:'get',
-				url:'/listcities/',
-				data:{id:country_id},
-				cache:false,
-				success: function(returndata){
 
-					var options = '<option value="*">Please select Class</option>';
-                                    
-					returndata.forEach(function(data){
-						// console.log(data);
-						// $('#city').prepend(
-						// 	new Option(data,data)
-						// );
-                        options += '<option value="' + data + '">' + data + '</option>';
-					});
-					$('select#city').html(options);
-				}
-			});
-		}
-	})
+		$('select#city').prepend(new Option(
+			'Please select City','*'
+		));
+		$('select#city').val('*');
+		var nameCountry = $('#nameCountry').text();
+		$('select#country option').map(function(i, e) { 
+			if($(e).text() === nameCountry){
+				$('select#country').val(e.value);
+				return true;
+			}
+			return false;
+		});
+
+		$('select#country').change(function(){
+			var country_id = $('select#country').val();
+			$('#nameCountry').text($('select#country option:selected').text());
+			if(country_id != 0)
+			{
+				$.ajax({
+					type:'get',
+					url:'/listcities/',
+					data:{id:country_id},
+					cache:false,
+					success: function(returndata){
+						console.log(returndata);
+						var options = '<option value="*">Please select City</option>';
+						returndata.forEach(function(data){
+	                        options += sprintf(
+	                        	"<option value='%s'>%s</option>",data.id,data.name
+	                        );
+
+	                        // '<option value="' + data + '">' + data + '</option>';
+						});
+						$('select#city').html(options);
+					}
+				});
+			}
+		});
+
+		$('select#city').change(function(){
+			var city_id = $('select#city').val();
+			if(city_id != 0)
+			{
+				$.ajax({
+					type:'get',
+					url:'/cities/'+city_id+'.json',
+					data:{id:city_id},
+					cache:false,
+					success: function(returndata){
+
+						var image = sprintf(
+							"<a href='%s'><image src='%s' width=150 heigth=100></image></a>",returndata.image, returndata.image
+						);
+						var editLink = '<%= link_to 'Edit', edit_city_path(1)%>'.replace('1',city_id);
+
+						$('div#edit').html(
+							editLink
+						)
+						$('div#image_cities').html(image);
+					}
+				});
+			}
+		});
 })
 </script>
 
@@ -33,13 +72,13 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @country.name %>
+  <span id="nameCountry"><%= @country.name %></span>
 </p>
 
 
 <p>
   <strong>Flag:</strong>
-  <%= @country.flag %>
+  <%= image_tag @country.flag, width: 100, height: 70 %>
 </p>
 <select class="form-control " id="country">
   <% Country.all.each do |country| %>
@@ -54,5 +93,13 @@
   <option value="<%= city.id  %>"><%= city.name %></option>
   <% end %>
 </select>
-<%= link_to 'Edit', edit_country_path(@country) %> |
+<div id="image_cities" class="zoom-gallery">
+	
+</div>
+<div id="edit">
+<%= link_to 'Edit', edit_city_path(@country) %> 
+</div>
+|
+<div id="back">
 <%= link_to 'Back', countries_path %>
+</div>

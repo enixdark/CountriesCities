@@ -17,7 +17,7 @@
       <tr>
         <td><%= city.country_id %></td>
         <td><%= city.name %></td>
-        <td><%cl_image_tag(city.image) %></td>
+        <td><% image_tag(city.image) %></td>
         <td><%= link_to 'Show', city %></td>
         <td><%= link_to 'Edit', edit_city_path(city) %></td>
         <td><%= link_to 'Destroy', city, method: :delete, data: { confirm: 'Are you sure?' } %></td>

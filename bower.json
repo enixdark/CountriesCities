@@ -16,6 +16,7 @@
   "dependencies": {
     "jquery-file-upload": "~9.9.3",
     "blueimp-file-upload": "https://github.com/blueimp/jQuery-File-Upload.git#~9.9.3",
-    "magnific-popup": "https://github.com/dimsemenov/Magnific-Popup.git#~1.0.0"
+    "magnific-popup": "https://github.com/dimsemenov/Magnific-Popup.git#~1.0.0",
+    "sprintf": "~1.0.2"
   }
 }

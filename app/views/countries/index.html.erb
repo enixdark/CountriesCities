@@ -16,8 +16,9 @@
       <tr>
         <td><a href="<%= country_path country.id%>"><%= country.name %></a></td>
 
-        <td>
+        <td class="zoom-gallery"><a href="<%= country.flag %>">
         <%= image_tag country.flag,:type => :upload, :width => 150, :height => 100, :crop => :fill, class: "zoom-gallery" %></td>
+        </a>
         <td><%= link_to 'Show', country %></a></td>
         <td><%= link_to 'Edit', edit_country_path(country) %></td>
         <td><%= link_to 'Destroy', country, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -35,18 +36,3 @@
     <%= will_paginate @countries, :container => false %>
   </div>
 <%= link_to 'New Country', new_country_path %>
-<div class="">
-  <!--
-
-  Width/height ratio of thumbnail and the main image must match to avoid glitches.
-
-  If ratios are different, you may add CSS3 opacity transition to the main image to make the change less noticable.
-
-   -->
-  <a href="http://farm4.staticflickr.com/3763/9204547649_0472680945_o.jpg" data-source="http://500px.com/photo/32736307" title="Into The Blue" style="width:193px;height:125px;">
-    <img src="http://farm4.staticflickr.com/3763/9204547649_7de96ee188_t.jpg" height="125" width="193">
-  </a>
-  <a href="http://farm3.staticflickr.com/2856/9207329420_7f2a668b06_o.jpg" data-source="http://500px.com/photo/32554131" title="Light Sabre" style="width:82px;height:125px;">
-    <img src="http://farm3.staticflickr.com/2856/9207329420_e485948b01_t.jpg" height="125" width="82px">
-  </a>
-</div>

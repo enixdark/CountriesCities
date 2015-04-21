@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require_tree .
 
+
 $(document).on('change', '.btn-file :file', function() {
   var input = $(this),
       numFiles = input.get(0).files ? input.get(0).files.length : 1,
@@ -55,7 +56,7 @@ $(document).ready(function() {
 		},
 		zoom: {
 			enabled: true,
-			duration: 300, // don't foget to change the duration also in CSS
+			duration: 300,
 			opener: function(element) {
 				return element.find('img');
 			}
