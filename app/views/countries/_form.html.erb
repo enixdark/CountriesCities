@@ -1,37 +1,46 @@
 
 <%= form_for @country, class: "form-group",html: { multipart: true } do |f| %>
-  <% if @country.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@country.errors.count, "error") %> prohibited this country from being saved:</h2>
+<% if @country.errors.any? %>
+<div id="error_explanation" class="alert alert-danger">
+  <h2><%= pluralize(@country.errors.count, "error") %> prohibited this country from being saved:</h2>
 
-      <ul>
-      <% @country.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <ul>
+    <% @country.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: "form-control" %>
-  </div>
+<div class="field">
   <div class="row">
-        <div class="col-lg-6 col-sm-6 col-12">
-            <h4>Input Groups</h4>
-            <div class="input-group">
-                <span class="input-group-btn">
-                    <span class="btn btn-primary btn-file">
-                        Browse <%= f.label :flag %> <%= f.file_field :flag%>
-                    </span>
-                </span>
-                <input type="text" class="form-control">
-            </div>
-        </div>
+  <div class="col-xs-1">
+  <%= f.label :name, class: "label" %>
   </div>
+  <br>
 
-  <div class="actions">
-    <%= f.submit 'Save',  class: "btn btn-primary"%>
+  <%= f.text_field :name, class: "form-control" %>
   </div>
+</div>
+<div class="field">
+  <div class="row">
+  <div class="col-xs-1">
+  <%= f.label :flag, class: "label"  %> 
+  </div>
+  <br>
+  <div class="input-group">
+    <span class="input-group-btn">
+      <span class="btn btn-primary btn-file">
+        Browse<%= f.file_field :flag%>
+      </span>
+    </span>
+    <%= f.text_field :flag, class: "form-control", name: "country[flag_text]"  %>
+  </div>
+  </div>
+</div>
+
+<div class="actions">
+  <%= f.submit 'Save',  class: "btn btn-primary crud"%>
+</div>
 <% end %>
 

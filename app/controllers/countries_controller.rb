@@ -13,10 +13,10 @@ class CountriesController < ApplicationController
   end
 
   def upload
-    # uploaded_io = params[:countries][:picture]
-    # File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-    #   file.write(uploaded_io.read)
-    # end
+    uploaded_io = params[:countries][:flag]
+    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
   end
 
   
@@ -34,8 +34,14 @@ class CountriesController < ApplicationController
 
   
   def create
-    @country = Country.new(country_params)
-
+    if country_params[:flag].original_filename == country_text_params[:flag_text]
+      @country = Country.new(country_params)
+    else
+      @country = Country.new
+      @country.name = country_text_params[:name]
+      @country.flag = country_text_params[:flag_text]
+    end
+    byebug
     respond_to do |format|
       if @country.save
         format.html { redirect_to @country, notice: 'Country was successfully created.' }
@@ -74,5 +80,9 @@ class CountriesController < ApplicationController
 
     def country_params
       params.require(:country).permit(:name, :flag)
+    end
+
+    def country_text_params
+      params.require(:country).permit(:name, :flag_text)
     end
 end

@@ -33,8 +33,6 @@
 							options += sprintf(
 								"<option value='%s'>%s</option>",data.id,data.name
 								);
-
-	                        // '<option value="' + data + '">' + data + '</option>';
 	                    });
 						$('select#city').html(options);
 					}
@@ -52,13 +50,14 @@
 					data:{id:city_id},
 					cache:false,
 					success: function(returndata){
+
+						var img = returndata.image === 'nil' ? '/uploads/default.jpg' : returndata.image;
 						var image = sprintf(
-							"<a href='%s'><image id='img' src='%s'></image></a>",returndata.image, returndata.image
-							);
+							"<a href='%s'><image id='img' src='%s'></image></a>",img, img );
 
-						var editLink = '<%= link_to "Edit City", edit_city_path(1), class: "btn btn-default"%>'.replace('1',city_id);
+						var editLink = '<%= link_to "Edit", edit_city_path(1), class: "btn btn-info crud"%>'.replace('1',city_id);
 
-						var destroyLink = '<%= link_to "Destroy City", city_path(id: 1), class: "btn btn-default" , method: :delete%>'.replace(1,city_id);
+						var destroyLink = '<%= link_to "Destroy", city_path(id: 1), class: "btn btn-danger crud" , method: :delete%>'.replace(1,city_id);
 
 						$('div#edit').html(
 							editLink
@@ -91,7 +90,7 @@
 					<% end %>
 				</select>
 			</li>
-
+			
 			<li>
 				<select class="form-control" id="city">
 					<% @country.cities.each do |city| %>
@@ -105,7 +104,9 @@
 </div>
 
 <div id="content">
-	<p id="notice"><%= notice %></p>
+	<% if !notice.nil? %>
+	<p id="notice" class="alert alert-success"><%= notice %></p>
+	<% end %>
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-11 col-sm-11">
@@ -137,16 +138,16 @@
 
 			<div class="col-xs-1 col-sm-1">
 				<div class="crud" id="new">
-				<%= link_to 'New City', new_city_path, class: "btn btn-default" %>
+				<%= link_to 'New', new_city_path, class: "btn btn-success crud" %>
 				</div>
 				<div class="crud" id="edit">
-					<%= link_to 'Edit City', edit_city_path(@country), class: "btn btn-default"%> 
-				</div>
-				<div class="crud" id="back">
-					<%= link_to 'Back', countries_path,  class: "btn btn-default"%>
+					<%= link_to 'Edit', edit_city_path(@country), class: "btn btn-info crud"%> 
 				</div>
 				<div class="crud" id="destroy">
-					<%= link_to 'Destroy City', city_path(id: 0),  class: "btn btn-default" , method: :delete, data: { class: "form-control", confirm: 'Are you sure?' } %>
+					<%= link_to 'Destroy', city_path(id: 0),  class: "btn btn-danger crud" , method: :delete, data: { class: "form-control", confirm: 'Are you sure?' } %>
+				</div>
+				<div class="crud" id="back">
+					<%= link_to 'Back', countries_path,  class: "btn btn-warning crud"%>
 				</div>
 				
 			</div>

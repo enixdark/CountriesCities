@@ -2,6 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.btn {
+    font-size:16px !important;
+    color:#fff !important;
+}
+
 #center {
     background: url("../images/header_tile.gif") repeat-x scroll 0 0 #c52f24;
     color: #fff;
@@ -19,6 +25,15 @@
 	width: 95%;
     height: 30%;
     overflow: hidden;
+}
+
+.crud {
+    width:80px;
+}
+
+p#new {
+    float:right;
+    padding-top:20px;
 }
 // a{
 // 	color:#fff;
@@ -38,6 +53,7 @@ li {
     float:left !important;
     display:inline-block;
     vertical-align: top;
+    padding-right:10px;
 }
 
 .clearfix {

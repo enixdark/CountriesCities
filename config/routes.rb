@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'listcities' => 'countries#list_cities'
   get 'cities', to: redirect('/countries')
   # get 'cities' => ''
-  # get 'upload' => 'countries#upload'
+  get 'upload' => 'countries#upload'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
