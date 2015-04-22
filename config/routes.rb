@@ -8,11 +8,12 @@ Rails.application.routes.draw do
   # end
   resources :countries#, only: [:index, :new, :create, :destroy]
   # resources :flag, only: [:index, :new, :create, :destroy]
+  get "listcountries" => redirect { |params, request| "/countries/?id=#{params[:id]}" }
+
   get 'listcities' => 'countries#list_cities'
   get 'cities', to: redirect('/countries')
   # get 'cities' => ''
   get 'upload' => 'countries#upload'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

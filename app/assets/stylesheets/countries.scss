@@ -3,6 +3,42 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+img .world{
+    opacity: 0.6;
+    transition: opacity 1s ease-in-out;
+    -moz-transition: opacity 1s ease-in-out;
+    -webkit-transition: opacity 1s ease-in-out;
+    border:1px solid gray !important; 
+    color:#fff; 
+    -moz-box-shadow: 10px 10px 50px #ccc; 
+    -webkit-box-shadow: 10px 10px 50px #ccc; 
+    box-shadow: 10px 10px 50px #ccc;
+
+}
+
+img .world :hover {
+    opacity: 1.0;
+    transition: opacity .55s ease-in-out;
+    -moz-transition: opacity .55s ease-in-out;
+    -webkit-transition: opacity .55s ease-in-out;
+}
+
+li {
+    display: inline;
+}
+
+ul > .nav {
+    margin: 20px auto !important;
+} 
+
+.nav > li {
+    float:left !important;
+    display:inline-block;
+    vertical-align: top;
+    padding-right:10px;
+}
+
+
 .btn {
     font-size:16px !important;
     color:#fff !important;
@@ -25,6 +61,7 @@
 	width: 95%;
     height: 30%;
     overflow: hidden;
+    
 }
 
 .crud {
@@ -45,16 +82,8 @@ p#new {
 // 	background-color:green;
 // }
 
-li {
-    display: inline;
-}
 
-.nav > li {
-    float:left !important;
-    display:inline-block;
-    vertical-align: top;
-    padding-right:10px;
-}
+
 
 .clearfix {
     display: block;

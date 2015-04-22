@@ -20,17 +20,14 @@ class CitiesController < ApplicationController
   def create
     @city = City.new(city_params)
     if !city_params[:image].nil? &&
-      city_params[:image].original_filename == city_text_params[:url]
-      @city = City.new(city_params)
+      city_params[:image].original_filename == city_params[:url]
       @city.save
       @city.url = @city.image.url
-    else
-      @city = City.new(city_text_params)
     end
-
     respond_to do |format|
       if @city.save
-        format.html { redirect_to @city, notice: 'City was successfully created.' }
+        @country = Country.find_by(id: @city.country_id)
+        format.html { redirect_to @country, success: 'City was successfully created.' }
         format.json { render :show, status: :created, location: @city }
       else
         format.html { render :new }
@@ -43,20 +40,21 @@ class CitiesController < ApplicationController
 
     p = city_params
     if !p[:image].nil?
-      if p[:image].original_filename == city_text_params[:url]
+      if p[:image].original_filename == city_params[:url]
         f = p[:image]
         p[:url] = File.join('/',imageUploader.dir,f.headers.split()[2].split(/\W+/)[1..-1],
           params[:id],f.original_filename)
       else
-        p[:url] = city_text_params[:url]
+        p[:url] = city_params[:url]
       end
     else
-      p[:url] = city_text_params[:url]
+      p[:url] = city_params[:url]
     end
 
     respond_to do |format|
       if @city.update(p)
-        format.html { redirect_to @city, notice: 'City was successfully updated.' }
+        @country = Country.find_by(id: @city.country_id)
+        format.html { redirect_to @country, success: 'City was successfully updated.' }
         format.json { render :show, status: :ok, location: @city }
       else
         format.html { render :edit }
@@ -68,7 +66,8 @@ class CitiesController < ApplicationController
   def destroy
     @city.destroy
     respond_to do |format|
-      format.html { redirect_to cities_url, notice: 'City was successfully destroyed.' }
+      @country = Country.find_by(id: @city.country_id)
+      format.html { redirect_to @country, success: 'City was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -79,10 +78,10 @@ class CitiesController < ApplicationController
     end
 
     def city_params
-      params.require(:city).permit(:city_id, :name, :image)
+      params.require(:city).permit(:country_id, :name, :image, :url)
     end
 
-    def city_text_params
-      params.require(:city).permit(:city_id, :name, :url)
-    end
+    # def city_text_params
+    #   params.require(:city).permit(:country_id, :name, :url)
+    # end
 end

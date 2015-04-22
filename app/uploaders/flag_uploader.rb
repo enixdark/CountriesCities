@@ -1,11 +1,11 @@
 # encoding: utf-8
-
+# require_relative 'uploader'
 class FlagUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
-
+  # include Uploader
   # Choose what kind of storage to use for this uploader:
   storage :file
   # storage :fog
@@ -17,7 +17,7 @@ class FlagUploader < CarrierWave::Uploader::Base
   end
 
   def self.dir
-    "uploads"
+    'uploaders'
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

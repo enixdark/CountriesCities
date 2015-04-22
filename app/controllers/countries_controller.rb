@@ -12,7 +12,7 @@ class CountriesController < ApplicationController
     """
     id = request.query_parameters[:id].to_i
     @data = Country.find(id).cities
-    render json: @data.map { |d| {id: d.id,name: d.name}}
+    render json: @data.map { |d| {id: d.id,name: d.name,url: d.url}}
   end
 
   # def upload
@@ -37,20 +37,18 @@ class CountriesController < ApplicationController
 
   
   def create
+    @country = Country.new(country_params)
     if !country_params[:flag].nil? &&
-      country_params[:flag].original_filename == country_text_params[:url]
-      @country = Country.new(country_params)
+      country_params[:flag].original_filename == country_params[:url]
       @country.save
       # path = @country.flag.store_path.split('/')
       # path.insert(3,@country.id)
       @country.url = @country.flag.url
-    else
-      @country = Country.new(country_text_params)
     end
     # byebug
     respond_to do |format|
       if @country.save
-        format.html { redirect_to @country, notice: 'Country was successfully created.' }
+        format.html { redirect_to @country, success: 'Country was successfully created.' }
         format.json { render :show, status: :created, location: @country }
       else
         format.html { render :new }
@@ -67,20 +65,20 @@ class CountriesController < ApplicationController
 
     p = country_params
     if !p[:flag].nil?
-      if p[:flag].original_filename == country_text_params[:url]
+      if p[:flag].original_filename == country_params[:url]
         f = p[:flag]
         p[:url] = File.join('/',FlagUploader.dir,f.headers.split()[2].split(/\W+/)[1..-1],
           params[:id],f.original_filename)
       else
-        p[:url] = country_text_params[:url]
+        p[:url] = country_params[:url]
       end
     else
-      p[:url] = country_text_params[:url]
+      p[:url] = country_params[:url]
     end
     # country_params[:url] = country_params[:flag].url
     respond_to do |format|
       if @country.update(p)
-        format.html { redirect_to @country, notice: 'Country was successfully updated.' }
+        format.html { redirect_to @country, success: 'Country was successfully updated.' }
         format.json { render :show, status: :ok, location: @country }
       else
         format.html { render :edit }
@@ -92,7 +90,7 @@ class CountriesController < ApplicationController
   def destroy
     @country.destroy
     respond_to do |format|
-      format.html { redirect_to countries_url, notice: 'Country was successfully destroyed.' }
+      format.html { redirect_to countries_url, success: 'Country was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -103,10 +101,8 @@ class CountriesController < ApplicationController
     end
 
     def country_params
-      params.require(:country).permit(:name, :flag)
+      params.require(:country).permit(:name, :flag, :url)
     end
 
-    def country_text_params
-      params.require(:country).permit(:name, :url)
-    end
+    
 end

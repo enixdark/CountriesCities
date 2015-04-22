@@ -5,7 +5,8 @@
 
 		$('select#city').prepend(new Option(
 			'Please select City','*'
-			));
+		));
+
 		$('select#city').val('*');
 		var nameCountry = $('#nameCountry').text();
 		$('select#country option').map(function(i, e) { 
@@ -50,30 +51,22 @@
 					data:{id:city_id},
 					cache:false,
 					success: function(returndata){
-
-						var img = returndata.url === 'nil' ? '/uploads/default.jpg' : returndata.url;
-						var image = sprintf(
+						var img = returndata.url === null ? '/uploads/default.jpg' : returndata.url;
+						var dict = {};
+						dict['div#image_cities'] = sprintf(
 							"<a href='%s'><image id='img' src='%s'></image></a>",img, img );
 
-						var editLink = '<%= link_to "Edit", edit_city_path(1), class: "btn btn-info crud"%>'.replace('1',city_id);
+						dict['div#edit'] = '<%= link_to "Edit", edit_city_path(1), class: "btn btn-info crud"%>'.replace('1',city_id);
 
-						var destroyLink = '<%= link_to "Destroy", city_path(id: 1), class: "btn btn-danger crud" , method: :delete%>'.replace(1,city_id);
+						dict['div#destroy'] = '<%= link_to "Destroy", city_path(id: 1), class: "btn btn-danger crud" , method: :delete, data: { confirm: "Are you sure?" }%>'.replace(1,city_id);
 
-						$('div#edit').html(
-							editLink
-						);
-						$('div#destroy').html(
-							destroyLink
-						);
-
-						$('div#image_cities').html(image);
+						Object.keys(dict).forEach(function(key){
+							$(key).html(dict[key]);
+						})
 					}
 				});
 			}
 		});
-
-		
-
 	});
 
 </script>
@@ -82,7 +75,7 @@
 <div id="center">
 	<div class="container">
 		<div class="wrapper clearfix">
-			<h1><a title="Return to home page" href="index.html">Guides.rubyonrails.org</a></h1>
+			<h1>List Citites</h1>
 			<ul class="nav">
 				<li><select class="form-control" id="country">
 					<% Country.all.each do |country| %>
@@ -104,9 +97,11 @@
 </div>
 
 <div id="content">
-	<% if !notice.nil? %>
+	<!-- <% if !notice.nil? %>
 	<p id="notice" class="alert alert-success"><%= notice %></p>
-	<% end %>
+	<% end %> -->
+	<%= render partial: "shared/flash_messages", flash: flash %> 
+
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-11 col-sm-11">
@@ -138,6 +133,7 @@
 			</div>
 
 			<div class="col-xs-1 col-sm-1">
+				<h1></h1>
 				<div class="crud" id="new">
 				<%= link_to 'New', new_city_path, class: "btn btn-success crud" %>
 				</div>
