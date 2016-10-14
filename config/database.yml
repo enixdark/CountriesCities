@@ -11,13 +11,14 @@ default: &default
 
 development:
   <<: *default
-  adapter: mysql2
-  encoding: utf8
-  database: country
-  username: root
-  password: 
-  host: localhost
-  port: 3306
+  database: db/development.sqlite3
+  #adapter: mysql2
+  #encoding: utf8
+  #database: country
+  #username: root
+  #password: 
+  #host: localhost
+  #port: 3306
   # secure_auth: false
 
 # Warning: The database defined as "test" will be erased and
@@ -29,10 +30,4 @@ test:
 
 production:
   <<: *default
-  adapter: mysql2
-  encoding: utf8
-  database: country
-  username: root
-  password: 
-  host: localhost
-  port: 3306
+  database: db/production.sqlite3
