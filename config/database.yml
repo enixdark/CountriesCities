@@ -11,15 +11,14 @@ default: &default
 
 development:
   <<: *default
-  database: db/development.sqlite3
-  #adapter: mysql2
-  #encoding: utf8
-  #database: country
-  #username: root
-  #password: 
-  #host: localhost
-  #port: 3306
-  # secure_auth: false
+  adapter: mysql2
+  encoding: utf8
+  database: 11e5aaaacee864599d7a9ba0c1cd1bb7
+  username: f2bc4436306ea53bb33f76aad369e46f
+  password: 175cd5c028816c1f845c7990d37cd138
+  host: leader.mariadb.discoverd
+  port: 3306
+  secure_auth: false
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -30,4 +29,12 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  database: 11e5aaaacee864599d7a9ba0c1cd1bb7
+  username: f2bc4436306ea53bb33f76aad369e46f
+  password: 175cd5c028816c1f845c7990d37cd138
+  host: leader.mariadb.discoverd
+  port: 3306
+  secure_auth: false
+
